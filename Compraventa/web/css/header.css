@@ -1,0 +1,26 @@
+/* 
+    Document   : header
+    Created on : Jan 19, 2013, 5:47:00 PM
+    Author     : Andres
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+#Logo{
+    text-align: center;
+    cursor:pointer;
+}
+.backcolor,.backcolor tr, .backcolor td{
+    background-color: #FFFFFF;
+    margin:0px;
+}
+body{
+    background-color: #FFFFFF;
+}
+hr{
+    padding: 0px;
+    margin: 0px; 
+}
