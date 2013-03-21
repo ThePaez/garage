@@ -1,0 +1,18 @@
+/* 
+    Document   : footer
+    Created on : 21/03/2013, 09:39:24 AM
+    Author     : Andres
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+div.footTables{
+    background-color: #F3F3F3;
+}
+
+ul.foot{
+   list-style-type: none;
+   color:black;
+   text-align: justify;
+}
+
