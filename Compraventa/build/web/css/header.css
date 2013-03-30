@@ -18,6 +18,10 @@ div.headTables{
     background-color: #F3F3F3;
 }
 
+div.bodyTables{
+    background-color: #fff;
+}
+
 body{
     font-family: "TREBUCHET MS";
 }
@@ -31,3 +35,60 @@ a:link {color:#0000FF; text-decoration:none;}    /* unvisited link */
 a:visited {color:#000099; text-decoration:none;} /* visited link */
 a:hover {color:#FF0000; text-decoration:underline;}   /* mouse over link */
 a:active {color:#000000; text-decoration:underline;}  /* selected link */
+
+a.boton:hover {
+    display: inline-block; 
+    padding: 6px 8px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#f4f4f4'); /* for IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f4f4f4)); /* for webkit browsers */
+    background: -moz-linear-gradient(top,  #f9f9f9,  #f4f4f4); /* for firefox 3.6+ */
+    color: #000;
+    text-decoration:none;
+    font-weight: 700;
+    font-size: 20px;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 1px;
+}
+a.boton:active{
+    padding: 6px 8px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff'); /* for IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff)); /* for webkit browsers */
+    background: -moz-linear-gradient(top,  #fff,  #ff); /* for firefox 3.6+ */
+    color: #aa0000;
+    text-decoration:none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-color: white;
+    
+}
+a.boton,a.boton:link,a.boton:visited{
+    display: inline-block; 
+    padding: 6px 8px;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee'); /* for IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee)); /* for webkit browsers */
+    background: -moz-linear-gradient(top,  #fff,  #eee); /* for firefox 3.6+ */
+    color: #274;
+    text-decoration:none;
+    font-weight: 700;
+    font-size: 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #ddd;
+    border-width: 1px;
+}
+span.boton{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.ui-dialog{
+    background:#fff;
+}

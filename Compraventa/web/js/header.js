@@ -25,32 +25,40 @@ function getCookie(c_name)
 }
 function isLoggedIn(){
     var name = getCookie("Usuario");
-    return name && name != "null";
+    return name && name != "null" && name != "";
 }
-$(function() {
-    $( ".UpperButtons" ).button({
-        height:1
+function busca(){
+    $( "#dialog-form1" ).dialog( "open" );
+}
+var redirect = 'home';
+function nVenta(){
+    if(!isLoggedIn()){
+        redirect = 'nuevaventa';
+        $( "#dialog-form" ).dialog( "open" );
+    } else {
+        window.location="nuevaventa";
+    }
+}
+function callDialog(){
+    if(!isLoggedIn()){
+        redirect = 'home';
+        $( "#dialog-form" ).dialog( "open" );
+    } else {
+        $.post("/Compraventa-war/nusu",{logout:""}, function(data) {
+            if(data.indexOf("Sesión cerrada") != -1){
+                window.location = "/Compraventa-war/home";
+            }
         });
-    $( "#LoginButton" )
-			.button()
-			.click(function() {  
-                            if(!isLoggedIn()){
-                                $( "#dialog-form" ).dialog( "open" );
-                            } else {
-                                $.post("/Compraventa-war/nusu",{logout:""}, function(data) {
-                                    if(data.indexOf("Sesión cerrada") != -1){
-                                        window.location = "/Compraventa-war/home";
-                                    }
-                                });
-                            }
-                            
-			});
+    }
+}
 
-        
+$(function() {
+
     var name = $( "#Username" ),
     password = $( "#Password" ),
     allFields = $( [] ).add( name ).add( password ),
-    tips = $( ".validateTips" );
+    tips = $( ".validateTips" ),
+    buscar = $("#Busca");
 
     function updateTips( t ) {
         tips
@@ -64,8 +72,8 @@ $(function() {
     function checkLength( o, n, min, max ) {
         if ( o.val().length > max || o.val().length < min ) {
             o.addClass( "ui-state-error" );
-            updateTips( "Length of " + n + " must be between " +
-                min + " and " + max + "." );
+            updateTips( "El número de caracteres " + n + " debe de estar entre " +
+                min + " y " + max + "." );
             return false;
         } else {
             return true;
@@ -81,6 +89,25 @@ $(function() {
             return true;
         }
     }
+    
+    $( "#dialog-form1" ).dialog({
+        autoOpen: false,
+        height: 200,
+        width: 300,
+        modal:true,
+        buttons: {
+            "Buscar": function() {
+                window.location='buscar?q='+buscar[0].value;
+            },
+            Cancelar: function() {
+                $( this ).dialog( "close" );
+            }
+        },
+        close: function() {
+            $( [] ).add(buscar).val( "" ).removeClass( "ui-state-error" );
+        }
+    });
+    $("#dialog-form1").dialog().parents(".ui-dialog:eq(0)").addClass("mainTheme");
 
     $( "#dialog-form" ).dialog({
         autoOpen: false,
@@ -92,19 +119,19 @@ $(function() {
                 var bValid = true;
                 allFields.removeClass( "ui-state-error" );
 
-                bValid = bValid && checkLength( name, "username", 3, 16 );
-                bValid = bValid && checkLength( password, "password", 5, 16 );
+                bValid = bValid && checkLength( name, "del usuario", 4, 20 );
+                bValid = bValid && checkLength( password, "de la contraseña",6, 20 );
 
-                bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
+                bValid = bValid && checkRegexp( name, /^[a-zA-Zñ0-9\(\)\-\.\?\[\]\+\*\/\,"'_]{4,20}$/, 'Nombre de usuario tiene que tener entre 4 y 20 caracteres incluyendo: ()_-.?[]+*/,\"\' ' );
                 // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-                bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
+                bValid = bValid && checkRegexp( password, /^[a-zA-Zñ0-9\(\)\-\.\?\[\]\+\*\/\,"'_]{6,20}$/, 'La contraseña debe de tener entre 6 y 20 caracteres incluyendo: ()_-.?[]+*/,\"\' ' );
 
                 if ( bValid ) {
                     $.post("/Compraventa-war/nusu",{usuario:name[0].value,password:password[0].value}, function(data) {
                         if(data.indexOf("Sesión iniciada") != -1){
-                            window.location = "/Compraventa-war/home";
+                            window.location = redirect;
                         } else {
-                            updateTips("Username or Password incorrect");
+                            updateTips("Usuario o contraseña inválido");
                         }
                     });
                 }

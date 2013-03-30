@@ -1,0 +1,22 @@
+/* 
+    Document   : registro.css
+    Created on : 29/03/2013, 04:28:50 PM
+    Author     : Andres
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+#Username, #Email, #Password, #CPassword{
+    width:100%;
+}
+label.err{
+    color:red;
+    font-style:italic;
+}
+label.nor{
+    color:green;
+    font-style:normal;
+}

@@ -5,24 +5,32 @@
         <servlet-class>org.cv.servlets.ControladorUsuario</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>NewServlet</servlet-name>
-        <servlet-class>org.cv.servlets.NewServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>home</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>nuevaVenta</servlet-name>
+        <jsp-file>/nuevaVenta.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>RegJSP</servlet-name>
+        <jsp-file>/registro.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>ControladorUsuario</servlet-name>
         <url-pattern>/nusu</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>NewServlet</servlet-name>
-        <url-pattern>/nus</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>nuevaVenta</servlet-name>
+        <url-pattern>/nuevaventa</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegJSP</servlet-name>
+        <url-pattern>/reg</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
