@@ -85,8 +85,7 @@ a.boton,a.boton:link,a.boton:visited{
     border-width: 1px;
 }
 span.boton{
-    padding-left: 2px;
-    padding-right: 2px;
+    padding: 2px 2px;
 }
 
 .ui-dialog{

@@ -6,12 +6,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     Cookie[] cookies = request.getCookies();
-    for(Cookie c: cookies){
-        if(c.getName().compareTo("Usuario") == 0
-                && c.getValue().compareTo("null") != 0
-                && !c.getValue().isEmpty()){
-            this.getServletContext().setAttribute("Usuario", c.getValue());
-            break;
+    if(cookies != null){
+        for(Cookie c: cookies){
+            if(c.getName().compareTo("Usuario") == 0
+                    && c.getValue().compareTo("null") != 0
+                    && !c.getValue().isEmpty()){
+                this.getServletContext().setAttribute("Usuario", c.getValue());
+                break;
+            }
         }
     }
 %>
