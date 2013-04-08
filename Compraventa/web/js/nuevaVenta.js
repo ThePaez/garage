@@ -7,7 +7,7 @@ var dragok = false;
 var mousex,mousey; //vars para el offset del mouse en el mousedrag del canvas
 var dragStartx,dragStarty;
 var isTagging = false;
-var vistaImagen = false;
+var vistaImagen = true;
 
 // getElementById
 function $id(id) {
@@ -50,19 +50,19 @@ function Init() {
                 
 	}
         canvas.id     = "imgs";
-        canvas.height = filedrag.offsetHeight=400;
+        canvas.height = filedrag.offsetHeight=600;
         canvas.width  = filedrag.offsetWidth;
         canvas.tabIndex = 1;
         canvas.onmousedown = myDown;
         canvas.onmouseup = myUp;
         canvas.onkeypress = deleteImg;
         filedrag.appendChild(canvas);
-        $('#frame').height(500);
-        $('#frame1').height(500);
-        $('#Comentarios').height(350);
+        $('#frame').height(700);
+        $('#frame1').height(700);
         ctx = canvas.getContext('2d');
-        $id('Precio').onkeyup=guardaDetalles;
-        $id('Comentarios').onkeyup=guardaDetalles;
+        $id('Nombre').onkeyup=function() {guardaDetalles(imgcount-1,"Nombre",null,null)};
+        $id('Precio').onkeyup=function() {guardaDetalles(imgcount-1,null,"Precio",null)};
+        $id('Comentarios').onkeyup=function() {guardaDetalles(imgcount-1,null,null,"Comentarios")};
 }
 
 function toggleTagging(){
@@ -125,10 +125,13 @@ function FileSelectHandler(e) {
             if(isImage(f))
                 handleImage(e,f);
             else
-                alert(f.name + ' no es una imagen');
+                alert(f.name + ' no es una imagen, o es un formato no soportado');
 	}
 }
 function isImage(file) {
+    var temp = file.name.split(".");
+    if(temp[temp.length-1].toLowerCase() == "svg")
+        return false;
     return file.type.indexOf('image') != -1;
 }
 function handleImage(e,f){
@@ -177,15 +180,18 @@ function repaint(e){
             ctx.strokeRect(dragStartx,dragStarty,e.offsetX-dragStartx,e.offsetY-dragStarty);
         }
     } else {
-        var td = $id("VistaLista");
+        var td = $id("listaSet");
         while (td.hasChildNodes())
-        td.removeChild(td.lastChild);
+            td.removeChild(td.lastChild);
+        var leg = document.createElement('legend');
+        leg.innerHTML = 'Tus artículos';
+        td.appendChild(leg);
         if(imgcount>0){
             var tabla = document.createElement("table");
             tabla.className = "TablaLista";
-            var tr,td1,div;
+            var tr,td1,div,lblnom,lblprec,nomIn,precIn;
             for(i=0;i<imgcount;i++){
-                if(i%4==0){
+                if(i%3==0){
                     tr = document.createElement("tr");
                     tabla.appendChild(tr);
                 }
@@ -197,6 +203,25 @@ function repaint(e){
                 imagenes[i].imagen.style.maxHeight = "100%";
                 div.appendChild(imagenes[i].imagen);
                 td1.appendChild(div);
+                lblnom = document.createElement("label");
+                lblnom.htmlFor = "nomIn"+i;
+                lblnom.innerHTML = "Nombre:";
+                lblprec = document.createElement("label");
+                lblprec.htmlFor = "precIn"+i;
+                lblprec.innerHTML = "Precio :";
+                precIn = document.createElement("input");
+                precIn.value = imagenes[i].precio;
+                precIn.id = "precIn"+i;
+                precIn.onkeyup = (function(index,id) {return function(){guardaDetalles(index,null,id,null)}})(i,precIn.id);
+                nomIn = document.createElement("input");
+                nomIn.value = imagenes[i].nombre;
+                nomIn.id = "nomIn"+i;
+                nomIn.onkeyup = (function(index,id) {return function(){guardaDetalles(index,id,null,null)}})(i,nomIn.id);
+                td1.appendChild(lblnom);
+                td1.appendChild(nomIn);
+                td1.appendChild(document.createElement("br"));
+                td1.appendChild(lblprec);
+                td1.appendChild(precIn);
             }
             td.appendChild(tabla);
         } else {
@@ -206,11 +231,14 @@ function repaint(e){
         }
     }
 }
-function guardaDetalles(){
+function guardaDetalles(numImg,idN,idP,idC){
     if(imgcount>0){
-        imagenes[imgcount-1].nombre = $id("Nombre").value;
-        imagenes[imgcount-1].precio = $id("Precio").value;
-        imagenes[imgcount-1].comentarios = $id("Comentarios").value;
+        if(idN != null)
+            imagenes[numImg].nombre = $id(idN).value;
+        if(idP != null)
+            imagenes[numImg].precio = $id(idP).value;
+        if(idC != null)
+            imagenes[numImg].comentarios = $id(idC).value;
     }
 }
 function myMove(e){
@@ -308,14 +336,14 @@ function verImagen(){
     $id("VistaLista").hidden = "hidden";
     $id("TagButton").onclick=toggleTagging;
     $id("fondo").onclick=CargaFondo;
-    window.setTimeout(repaint,1000);
+    window.setTimeout(repaint,1);//Para evitar glitches en repaint...
 }
 
 function verLista(){
     vistaImagen = false;
+    repaint();
     $id("VistaImagen").hidden = "hidden";
     $id("VistaLista").removeAttribute("hidden");
     $id("TagButton").onclick=null;
     $id("fondo").onclick=null;
-    window.setTimeout(repaint,1000);
 }

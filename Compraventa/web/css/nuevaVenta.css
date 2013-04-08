@@ -39,6 +39,9 @@ input{
 input#fondo{
     width: auto;
 }
+#VistaLista input{
+    width: auto;
+}
 span.imgspan{
   display: inline;
   position: relative;
@@ -59,14 +62,23 @@ span.imgspan img {
 #VistaLista{
     vertical-align: text-top;
     text-align: justify;
-    padding: 12px 12px;
 }
 div.imgdiv{
     margin: auto;
-    width: 100px;
-    height: 100px;
+    width: 220px;
+    height: 140px;
+    text-align: center;
+    vertical-align: middle;
 }
 table.TablaLista{
-    border-spacing: 5px;
-    width: 100%;
+    position: relative;
+    border-spacing: 10px;
+    width:100%;
+}
+table.TablaLista td{
+    border-right:1px dashed #274;
+    border-bottom:1px dashed #274;
+    border-left:1px dashed #274;
+    border-top:1px dashed #274;
+    text-align: center;
 }

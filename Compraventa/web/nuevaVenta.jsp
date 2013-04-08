@@ -40,7 +40,7 @@
                 
                 <tr>
                     <!-- Vista Imagen -->
-                    <td width="70%" id="VistaImagen">
+                    <td width="100%" id="VistaImagen">
                         <form id="upload">
                         <fieldset id="frame">
                             <legend>Tus artículos</legend>
@@ -57,9 +57,15 @@
                         </form>
                     </td>
                     <!-- Vista Lista -->
-                    <td width="70%" id="VistaLista" hidden ="hidden">
+                    <td width="100%" id="VistaLista" hidden ="hidden">
+                        <form>
+                        <fieldset id="listaSet">
+                            <!--Generado todo en javascript... no escribir html aquí!!-->
+                        </fieldset>
+                        </form>
+                        
                     </td>
-                    <td width="30%">
+                    <td hidden="hidden" id="formulario">
                         <form id="upload1">
                         <fieldset id="frame1">   
                             <legend>Detalles del artículo seleccionado</legend>
